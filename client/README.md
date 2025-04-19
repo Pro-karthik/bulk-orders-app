@@ -1,12 +1,49 @@
-# React + Vite
+## Role-Based Handling and Route Protection
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This application implements role-based access control using `localStorage` for storing user roles and cookies for storing the `jwt_token`. The following approach is used:
 
-Currently, two official plugins are available:
+1. **Role Storage**:  
+   - The user's role (e.g., `ADMIN`, `USER`) is stored in `localStorage` upon successful login.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Token Storage**:  
+   - The `jwt_token` is securely stored in cookies to authenticate API requests and protect sensitive routes.
 
-## Expanding the ESLint configuration
+3. **Protected Routes**:  
+   - Routes are protected using a `ProtectedRoute` component that checks for the presence of a valid token in cookies and verifies the user's role from `localStorage`.
+   - Unauthorized users are redirected to the login page.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+4. **Role-Based Layouts**:  
+   - `AdminLayout` is rendered for users with the `ADMIN` role.
+   - `BuyerLayout` is rendered for users with the `USER` or `ADMIN` role.
+
+5. **Nested Routes**:  
+   - Nested routes are used to efficiently manage role-based layouts and their respective child components (e.g., `Dashboard` and other routes for admin, `ProductCatalogue` and other routes for users).
+
+This approach ensures secure and efficient role-based access control while maintaining a clean and modular structure.
+
+## Axios Management for Login and Register
+
+The application uses `axios` for handling API requests during login and registration. Below is the detailed explanation:
+
+1. **Login**:
+   - The login form collects `email`, `password`, and `role` (either `ADMIN` or `USER`).
+   - On form submission, an API request is sent to the `/auth/login` endpoint with the user credentials.
+   - If the response is successful:
+     - The `jwt_token` is stored in cookies.
+     - The user's role is stored in `localStorage`.
+     - The user is redirected to the appropriate layout (`AdminLayout` or `BuyerLayout`) based on their role.
+   - If the login fails, an error message is displayed.
+
+2. **Register**:
+   - The registration form collects `name`, `email`, `password`, and `role`.
+   - On form submission, an API request is sent to the `/auth/register` endpoint with the user details.
+   - If the response is successful:
+     - The `jwt_token` is stored in cookies.
+     - The user's role is stored in `localStorage`.
+     - The user is redirected to the appropriate layout (`AdminLayout` or `BuyerLayout`) based on their role.
+   - If the registration fails, an error message is displayed.
+
+3. **Error Handling**:
+   - Both login and register forms handle errors gracefully by resetting the form fields and displaying appropriate error messages.
+
+This approach ensures seamless communication with the backend while maintaining a secure and user-friendly experience.

@@ -39,7 +39,7 @@ exports.register = async (req, res) => {
 
     const token = generateToken(account);
 
-    res.status(201).json({
+    res.status(200).json({
       id: account.id,
       email: account.email,
       role: account.role,
