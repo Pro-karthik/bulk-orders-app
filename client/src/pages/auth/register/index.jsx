@@ -32,7 +32,7 @@ const registerPage = () => {
       name
     }
      try{
-        const response = await axios.post('/auth/login',data)
+        const response = await axios.post('/auth/register',data)
         if(response.status === 200){
             loginUser(response.data.token)
             localStorage.getItem('role') === 'ADMIN' ? Navigate('/admin') : Navigate('/user');

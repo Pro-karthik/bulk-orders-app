@@ -1,5 +1,7 @@
 import { Outlet, Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../../context/orderWebpage"
+import {MobileNavItemsPopup,LogoutBtnLg,LogoutBtnSm} from "../../../components/Popup"
+import NavItemsAdmin from "../../../components/NavItems/NavItemsAdmin"
 
 const AdminLayout = () => {
   const { user, logoutUser } = useAuth()
@@ -10,27 +12,30 @@ const AdminLayout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="h-screen bg-gray-100">
       {/* Top Navbar */}
-      <header className="bg-blue-800 text-white px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Admin Panel</h1>
-        <div>
-          <span className="mr-4">Welcome, {user?.email}</span>
-          <button onClick={LogoutHandler} className="bg-red-600 px-3 py-1 rounded">Logout</button>
+      <header className="h-1/10 bg-[#4DEB0E] text-white px-6 py-4 flex justify-between items-center">
+        <h1 className="text-md font-bold md:text-xl">Agrofix fresh</h1>
+        <div className="flex items-center space-x-4 md:hidden">
+           <LogoutBtnSm LogoutHandler={LogoutHandler}/>
+           <MobileNavItemsPopup/>
         </div>
+        <div className="hidden md:flex items-center space-x-4">
+          <span className="text-sm md:text-lg">Hello, {user?.email}</span>
+          <LogoutBtnLg LogoutHandler={LogoutHandler}/>
+          </div>
       </header>
 
       {/* Sidebar + Content */}
-      <div className="flex">
-        <aside className="w-60 bg-white p-4 shadow-md">
-          <ul className="space-y-4">
-            <li><Link to="/admin" className="text-blue-700">Dashboard</Link></li>
-            <li><Link to="/admin/products" className="text-blue-700">Manage Products</Link></li>
-            <li><Link to="/admin/orders" className="text-blue-700">Manage Orders</Link></li>
-          </ul>
+      <div className="flex h-9/10">
+        <aside className="h-full w-60 bg-[#C2F6AD] shadow-md hidden flex flex-col justify-between items-between md:block">
+          <NavItemsAdmin/>
+          <div className="flex flex-col items-center justify-center h-8/10 p-2">
+            <h1 className="mt-auto text-center bottom-0 text-lg">© 2025 Agrofix fresh. All rights reserved. </h1>
+          </div>
         </aside>
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto bg-white">
           <Outlet />
         </main>
       </div>

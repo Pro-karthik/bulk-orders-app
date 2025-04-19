@@ -1,0 +1,80 @@
+.popup-cancel-cont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 40px;
+}
+
+.popup-cancel-cont button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding-right: 30px;
+  padding-top: 30px;
+  color: inherit;
+}
+
+.popup-nav-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
+}
+
+.logout-container {
+  background-color: #00000099;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.logout-cont-main{
+  background-color: #ffffff;
+  height: 200px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.logout-head {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.btn-cont {
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.cancel-btn {
+  background-color: transparent;
+  border: 2px solid #94a3b8;
+  color: #94a3b8;
+  padding: 10px;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: #3b82f6;
+  border: none;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-left: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}

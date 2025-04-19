@@ -10,6 +10,7 @@ import AdminLayout from './pages/admin/AdminLayout/AdminLayout'
 import BuyerLayout from './pages/buyer/UserLayout/UserLayout'
 import ProductCatalogue from './pages/buyer/ProductCatalogue'
 import Dashboard from './pages/admin/Dashboard'
+import AdminProducts from './pages/admin/AdminProducts'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           </ProtectedRoute>}
         >
             <Route index element={<Dashboard />} />
+            <Route path='products' element={<AdminProducts />} />
         </Route>
         <Route path='/user' element={
           <ProtectedRoute allowedRoles={['ADMIN','USER']}>
