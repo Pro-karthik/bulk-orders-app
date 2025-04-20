@@ -12,6 +12,8 @@ import ProductCatalogue from './pages/buyer/ProductCatalogue'
 import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 import AdminOrderMng from './pages/admin/AdminOrderMng'
+import MyCart from './pages/buyer/MyCart'
+import MyOrders from './pages/buyer/MyOrders'
 import NotFound from './components/NotFound'
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
           </ProtectedRoute>}
         >
             <Route index element={<ProductCatalogue />} />
+            <Route path='mycart' element={<MyCart />} />
+            <Route path='orders' element={<MyOrders/>}/>
         </Route>
         <Route path='/not-found' element={<NotFound/>}/>
         <Route path='*' element={<Navigate to='/not-found' replace />}/>

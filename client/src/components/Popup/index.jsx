@@ -2,12 +2,51 @@ import Popup from 'reactjs-popup'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {IoCloseSharp} from 'react-icons/io5'
 import {FiLogOut} from 'react-icons/fi'
+import NavItemsUser from '../NavItems/NavItemsUser'
 import NavItemsAdmin from '../NavItems/NavItemsAdmin'
 import { ProductAddForm ,ProductEditForm} from '../Forms'
+import OrderPostForm from '../Forms/OrderPostForm'
 import { FaEdit } from 'react-icons/fa'
 
 
 import './index.css'
+
+export const MobileUserNavItemsPopup =  () => {
+
+  return (
+    <div className="popup-container">
+      <Popup
+        modal
+        trigger={
+          <div type="button">
+            <GiHamburgerMenu />
+          </div>
+        }
+      >
+        {close => (
+          <>
+            <div className='h-screen w-screen bg-[#ffffff]'>
+              <div className="popup-cancel-cont">
+                <button
+                  type="button"
+                  className="trigger-button"
+                  onClick={() => close()}
+                >
+                  <IoCloseSharp />
+                </button>
+              </div>
+              <div className="popup-nav-cont">
+                <div className="w-screen">
+                <NavItemsUser close={close}/>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </Popup>
+    </div>
+  )
+}
 
 export const MobileNavItemsPopup = () => {
 
@@ -181,3 +220,23 @@ export const EditProductPopup = props => {
     </div>
   )
 }
+
+export const PlaceOrderPopup = () =>  (
+    <div className="popup-container">
+      <Popup
+        modal
+        trigger={
+          <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mt-3">
+          Place order
+       </button> }
+      >
+        {close => (
+          <>
+            <div className="logout-container">
+             <OrderPostForm  close={close}/>
+            </div>
+          </>
+        )}
+      </Popup>
+    </div>
+  )

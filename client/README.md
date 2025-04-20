@@ -201,3 +201,161 @@ The `Orders Management` route is part of the `AdminLayout` and provides a compre
 
 This route provides an efficient and user-friendly interface for managing orders, leveraging modern libraries and tools for enhanced functionality.
 
+## User Layout
+
+The `UserLayout` is designed to provide users with a seamless experience for browsing products, managing their cart, and tracking orders. It includes nested routes for various user functionalities, such as viewing the product catalogue, managing the cart, and checking order history.
+
+### Product Catalogue Page
+
+The `Product Catalogue` page is the primary interface for users to browse all available products. Below are the details:
+
+#### Features
+
+1. **Product Listing**:
+   - Displays a list of all available products.
+   - Each product is shown as a card with the following details:
+     - Product Name
+     - Product Price
+     - Add to Cart button
+
+2. **Add to Cart**:
+   - Users can add products to their cart by clicking the "Add to Cart" button on each product card.
+   - The product is added to the cart with a default quantity of 1.
+
+3. **API Integration**:
+   - Axios is used to fetch the list of products from the backend.
+   - Endpoint: `GET /api/products`
+   - The `jwt_token` from cookies is included in the request headers for authentication.
+
+4. **Error Handling**:
+   - Displays an error message if the API call fails.
+   - Provides a retry button to fetch the products again.
+
+5. **Loading State**:
+   - While the data is being fetched, a loading spinner (`react-spinners`) is displayed.
+
+6. **Responsive Design**:
+   - The layout is fully responsive, ensuring usability on both desktop and mobile devices.
+
+#### Axios Request Example
+
+```javascript
+const fetchProducts = async () => {
+  const token = Cookies.get('jwt_token');
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const response = await axios.get('/api/products', { headers });
+    if (response.status === 200) {
+      setProducts(response.data);
+    }
+  } catch (err) {
+    console.error('Error fetching products:', err);
+  }
+};
+```
+
+This page provides users with an intuitive interface to explore and select products for their needs.
+
+## My Cart Page
+
+The `My Cart` page is part of the `UserLayout` and provides users with an interface to manage their cart and place orders. Below are the details:
+
+### Features
+
+1. **Cart Management**:
+   - Displays all products added to the cart.
+   - Each product card includes:
+     - Product Name
+     - Product Price (calculated based on quantity)
+     - Quantity controls (Increase/Decrease)
+     - Remove button to delete the product from the cart.
+
+2. **Quantity Adjustment**:
+   - Users can increase or decrease the quantity of a product using the `+` and `-` buttons.
+   - The total price is updated dynamically based on the quantity.
+
+3. **Remove All**:
+   - A "Remove All" button allows users to clear the entire cart.
+
+4. **Place Order**:
+   - A "Place Order" button triggers a popup form where users can fill in their details to complete the order.
+
+5. **Order Form**:
+   - The popup form includes fields for:
+     - Buyer Name
+     - Buyer Contact
+     - Delivery Address
+   - **Validation**:
+     - Uses `React Hook Form` and `Yup Validator` for form validation.
+   - **API Integration**:
+     - Axios is used to send the order details and cart items to the backend.
+     - Endpoint: `POST /api/orders`
+     - The `jwt_token` from cookies is included in the request headers for authentication.
+
+6. **Error Handling**:
+   - Displays appropriate error messages if the cart is empty or the API call fails.
+
+7. **Loading State**:
+   - While the order is being placed, a loading state is displayed on the "Place Order" button.
+
+8. **Responsive Design**:
+   - The layout is fully responsive, ensuring usability on both desktop and mobile devices.
+
+### Workflow
+- Users can add products to the cart from the `Product Catalogue` page.
+- On the `My Cart` page, users can adjust quantities or remove items.
+- Once satisfied, users can click "Place Order," fill in their details in the popup form, and submit the order.
+
+This page provides a seamless and efficient interface for managing the cart and placing bulk orders.
+
+## My Orders Page
+
+The `My Orders` page is part of the `UserLayout` and provides users with a detailed view of all their orders. Below are the details:
+
+### Features
+
+1. **Order Tracking**:
+   - Displays all orders placed by the user.
+   - Each order is shown as a card with the following details:
+     - **Order ID**: Unique identifier for the order.
+     - **Buyer Name**: Name of the buyer.
+     - **Buyer Contact**: Contact information of the buyer.
+     - **Delivery Address**: Address where the order will be delivered.
+     - **Items**: List of products in the order, including:
+       - Product Name
+       - Quantity
+       - Price
+     - **Status**: Current status of the order (Pending, In Progress, Delivered).
+     - **Order Date**: Date and time when the order was placed.
+
+2. **Status Highlighting**:
+   - The status of each order is displayed as a colored chip:
+     - **Pending**: Yellow
+     - **In Progress**: Blue
+     - **Delivered**: Green
+
+3. **API Integration**:
+   - Axios is used to fetch the user's orders from the backend.
+   - Endpoint: `GET /api/orders`
+   - The `jwt_token` from cookies is included in the request headers for authentication.
+
+4. **Error Handling**:
+   - Displays an error message if the API call fails.
+   - Provides a retry button to fetch the orders again.
+
+5. **Loading State**:
+   - While the data is being fetched, a loading spinner (`react-spinners`) is displayed.
+
+6. **Responsive Design**:
+   - The layout is fully responsive, ensuring usability on both desktop and mobile devices.
+
+### Workflow
+- Users can navigate to the `My Orders` page to view all their past and current orders.
+- Each order card provides a comprehensive summary of the order details and status.
+
+This page offers users a clear and organized way to track their orders and stay updated on their status.
+

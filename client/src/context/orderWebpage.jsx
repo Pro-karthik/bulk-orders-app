@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mycart,setMycart] = useState([])
 
   const loginUser = (token) => {
     try {
@@ -19,7 +20,44 @@ export const AuthProvider = ({ children }) => {
       console.error("Invalid token");
     }
   };
+
+  const addToCart = (product) => {
+    console.log('contxt')
+    setMycart((prevCart) => {
+      const itemExists = prevCart.find((item) => item.id === product.id);
   
+      if (itemExists) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const decreaseQuantity = (productId) => {
+    setMycart((prevCart) => {
+      return prevCart
+        .map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0); 
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setMycart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  };
+  
+  const removeAllFromCart = () => {
+    setMycart([])
+  }
+
 
   const logoutUser = () => {
     Cookies.remove('jwt_token'); 
@@ -46,7 +84,7 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ user, loading, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user, loading, loginUser, logoutUser ,addToCart,decreaseQuantity,removeFromCart,removeAllFromCart,mycart}}>
       {children}
     </AuthContext.Provider>
   );

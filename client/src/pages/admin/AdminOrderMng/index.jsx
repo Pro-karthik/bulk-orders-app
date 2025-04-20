@@ -93,9 +93,21 @@ const AdminOrderMng = () => {
     </div>
   )
 
+  const EmptyView = () => (
+    <div className="flex flex-col justify-center items-center text-center h-120 ">
+      <img
+        className="w-1/2 h-1/2"
+        src='https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png'
+        alt="no orders"
+      />
+      <h1 className="font-bold text-xl mt-2">No Orders Found</h1>
+      <p className="mt-3">We could not find any orders. Please try again.</p>
+    </div>
+  )
+
   const SuccessView = () => (
     <div className='p-3'>
-         <OrderTable orders={orders} updateStatus={updateStatus}/>
+        {orders.length > 0 ? (<OrderTable orders={orders} updateStatus={updateStatus}/>): (<EmptyView/>)} 
     </div>
   )
 
