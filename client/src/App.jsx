@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Routes, Route ,Navigate} from 'react-router-dom'
 import './App.css'
 
-import InitialPage from './components/initialPage'
+import InitialPage from './components/InitialPage'
 import LoginPage from './pages/auth/login'
 import RegisterPage from './pages/auth/register'
 import ProtectedRoute from './components/ProtectedRoute'
