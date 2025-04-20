@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route ,Navigate} from 'react-router-dom'
 import './App.css'
 
 import InitialPage from './components/initialPage'
@@ -11,6 +11,8 @@ import BuyerLayout from './pages/buyer/UserLayout/UserLayout'
 import ProductCatalogue from './pages/buyer/ProductCatalogue'
 import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
+import AdminOrderMng from './pages/admin/AdminOrderMng'
+import NotFound from './components/NotFound'
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         >
             <Route index element={<Dashboard />} />
             <Route path='products' element={<AdminProducts />} />
+            <Route path='orders' element={<AdminOrderMng />} />
         </Route>
         <Route path='/user' element={
           <ProtectedRoute allowedRoles={['ADMIN','USER']}>
@@ -34,6 +37,8 @@ function App() {
         >
             <Route index element={<ProductCatalogue />} />
         </Route>
+        <Route path='/not-found' element={<NotFound/>}/>
+        <Route path='*' element={<Navigate to='/not-found' replace />}/>
       </Routes>
     </>
   )

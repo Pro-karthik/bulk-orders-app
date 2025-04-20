@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react';
-import { GridLoader } from 'react-spinners';
+import { PropagateLoader } from 'react-spinners';
 import axios from '../../../axiosInstance'
 import Cookies from 'js-cookie';
 import {AddProductPopup} from '../../../components/Popup'
@@ -76,19 +76,20 @@ const AdminProducts = () => {
   }
 
   const FailuerView = () => (
-    <div className="text-center h-8/10 ">
+    <div className="flex flex-col justify-center items-center text-center h-120 ">
     <img
+    className="w-1/2 h-1/2"
       src='https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
       alt="failure view"
     />
-    <h1>Oops! Something Went Wrong</h1>
-    <p>
+    <h1 className="font-bold text-xl mt-2">Oops! Something Went Wrong</h1>
+    <p className="mt-3">
       We are having some trouble to complete your request. Please try again.
     </p>
     <button
       type="button"
-      className="retry-btn"
-      onClick={this.FetchApiDetails}
+      className="rounded bg-blue-500 text-white px-4 py-2 mt-4 hover:bg-blue-700"
+      onClick={fetchProducts}
     >
       Retry
     </button>
@@ -114,13 +115,16 @@ const AdminProducts = () => {
     }
   }
 
+  const LoadingView = () => (
+    <div className="text-center h-150 flex justify-center items-center">
+       <PropagateLoader color="#36d7b7" size={15}/>
+    </div>
+  )
+
   const renderThings = () => {
     switch (apiStatus) {
       case apiStatusConstants.loading:
-        return <div className="text-center h-full "><GridLoader
-        color="#4b8ecc"
-        size={10}
-      /></div>;
+        return <LoadingView/>;
       case apiStatusConstants.success:
         return <ProductTable products={products} onEdit={onEdit} onDelete={onDelete}/>;
       case apiStatusConstants.failure:
@@ -133,7 +137,7 @@ const AdminProducts = () => {
   return (
     <div className="p-2 h-full">
       <div className="p-2 flex justify-between items-center w-full ">
-        <h1 className="text-lg">Product Management</h1>
+        <h1 className="text-lg font-bold md:text-2xl">Product Management</h1>
         <AddProductPopup  onSubmitAddProducts={ onSubmitAddProducts} />
       </div>
       <div className="mt-4 ">

@@ -1,45 +1,89 @@
 import React from 'react';
-import {  FaTrash } from 'react-icons/fa';
-import {EditProductPopup} from '../Popup';
+import { DataGrid } from '@mui/x-data-grid';
+import { IconButton, Box, Typography } from '@mui/material';
+import { FaTrash } from 'react-icons/fa';
+import { EditProductPopup } from '../Popup';
 
 const ProductTable = ({ products, onEdit, onDelete }) => {
-  if(!products || products.length === 0) {
+  if (!products || products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-9/10 w-full">
-        <img className='w-100' src='https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png' alt='empty'/>
-        <p className="text-xl mt-10 text-gray-500 text-center">No products available</p>
-        <p className="text-gray-500 text-center">Save your products by clicking on the add new product</p>
-      </div>
-    )
+      <Box className="flex flex-col items-center justify-center h-[90vh] w-full text-center">
+        <img
+          className="w-64"
+          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
+          alt="No products"
+        />
+        <Typography variant="h6" className="mt-6 text-gray-500">
+          No products available
+        </Typography>
+        <Typography className="text-gray-500">
+          Save your products by clicking on the add new product
+        </Typography>
+      </Box>
+    );
   }
+
+  
+  const columns = [
+    { field: 'id', headerName: 'Product ID',flex:1 ,minWidth:140},
+    { field: 'name', headerName: 'Product Name',flex:1,minWidth:140},
+    {
+      field: 'price',
+      headerName: 'Product Price',
+      flex:1,
+      minWidth:140,
+      valueFormatter: (params) => {
+        const value = params;
+        return typeof value === 'number' ? `₹${value}` : '₹0';
+      },
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      flex:1,
+      minWidth:140,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => {
+        const product = params.row;
+        return (
+          <Box display="flex" justifyContent="start" alignItems="center" gap={3}>
+            <EditProductPopup
+              actualDetails={product}
+              onSubmitEditProducts={onEdit}
+            />
+            <IconButton
+              className='text-lg'
+              color="error"
+              onClick={() => onDelete(product.id)}
+            >
+              <FaTrash className='text-lg md:text-2xl'/>
+            </IconButton>
+          </Box>
+        );
+      },
+    },
+  ];
+
   return (
-    <div className="flex flex-col items-center justify-center overflow-x-auto">
-      <table className="min-w-full border bg-white rounded shadow-md">
-        <thead>
-          <tr className="bg-gray-200 text-gray-700 text-left">
-            <th className="py-2 px-4">Product ID</th>
-            <th className="py-2 px-4">Product Name</th>
-            <th className="py-2 px-4">Product Price</th>
-            <th className="py-2 px-4 text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(product => (
-            <tr key={product.id} className="border-t">
-              <td className="py-2 px-4">{product.id}</td>
-              <td className="py-2 px-4">{product.name}</td>
-              <td className="py-2 px-4">₹{product.price}</td>
-              <td className="py-2 px-4 flex justify-center items-center gap-4">
-                <EditProductPopup onSubmitEditProducts={onEdit} actualDetails={product}/>
-                <button onClick={() => onDelete(product.id)} className="text-red-500 hover:text-red-700">
-                  <FaTrash />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Box sx={{ height: 500, width: '100%', overflowX: 'auto' }}>
+      <DataGrid
+        rows={products}
+        columns={columns}
+        pageSizeOptions={[5, 10]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 5, page: 0 } },
+        }}
+        getRowId={(row) => row.id}
+        disableRowSelectionOnClick
+        sx={{
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#f5f5f5',
+            fontWeight: 'bold',
+          },
+        }}
+      />
+    </Box>
   );
 };
 

@@ -166,7 +166,7 @@ export const EditProductPopup = props => {
       <Popup
         modal
         trigger={
-          <button className="text-blue-500 hover:text-blue-700">
+          <button className="text-blue-500 text-lg hover:text-blue-700 cursor-pointer flex justify-center items-center md:text-2xl" type="button">
                             <FaEdit />
                           </button> }
       >
