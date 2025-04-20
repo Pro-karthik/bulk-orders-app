@@ -1,5 +1,7 @@
 import {PropagateLoader} from 'react-spinners'
-import {useState,useEffect} from 'react'
+import {useState,useEffect, use} from 'react'
+import axios from '../../../axiosInstance'
+import Cookies from 'js-cookie'
 
 
 import { useAuth } from "../../../context/orderWebpage";
@@ -12,11 +14,33 @@ const apiStatusConstants = {
 }
 
 const Dashboard = () => {
-  // const {user} = useAuth()
-  // const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial)
-  // const [data, setData] = useState(null)
+  const {user} = useAuth()
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial)
+  const [data, setData] = useState(null)
 
-  
+  const fetchDashboardData = async () => {
+    setApiStatus(apiStatusConstants.loading)
+    const token = Cookies.get('token')
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+
+    try {
+      const response = await axios.get('/admin/dashboard', { headers })
+      if(response.status === 201){
+        setData(response.data)
+        setApiStatus(apiStatusConstants.success)
+      }
+    } catch (error) {
+      setApiStatus(apiStatusConstants.failure)
+    }
+  }
+
+  useEffect(() => {
+       fetchDashboardData()
+  }, [])  
+
 
   return (
     <div>

@@ -28,6 +28,8 @@ model Order{
   items Json
   status OrderStatus @default(Pending) 
   createdAt DateTime @default(now()) @map("created_at")
+  accountId       String      @map("account_id")
+  account         Account     @relation("AccountOrders", fields: [accountId], references: [id])
 }
 
 model Account{
@@ -36,6 +38,7 @@ model Account{
   email     String   @unique
   password  String
   role      Role     @default(USER)
+  orders    Order[]  @relation("AccountOrders")
 }
 
 enum Role {

@@ -19,6 +19,7 @@ export const ProductAddForm = ({ onSubmitAddProducts,close}) => {
   const onSubmit = (data) => {
     onSubmitAddProducts(data)
     reset()
+    close()
   }
 
   return (
@@ -105,8 +106,8 @@ export const ProductEditForm = ({ onSubmitEditProducts, close, actualDetails }) 
   }, [actualDetails, reset]);
 
   const onSubmit = (data) => {
-    onSubmitEditProducts(data); // includes `id` in data
-    reset(); // optional: clear form after submission
+    onSubmitEditProducts(data); 
+    reset(); 
   };
 
   return (
@@ -121,8 +122,6 @@ export const ProductEditForm = ({ onSubmitEditProducts, close, actualDetails }) 
         <p className="text-gray-500 mb-4">Update product details below.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto p-4">
-          {/* Hidden input for ID */}
-          <input type="hidden" {...register('id')} />
 
           <div>
             <label className="block mb-1 font-medium">Name</label>
@@ -137,7 +136,6 @@ export const ProductEditForm = ({ onSubmitEditProducts, close, actualDetails }) 
             <label className="block mb-1 font-medium">Price</label>
             <input
               type="number"
-              step="0.01"
               {...register('price')}
               className="w-full border px-3 py-2 rounded"
             />

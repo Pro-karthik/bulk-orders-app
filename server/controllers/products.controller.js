@@ -8,7 +8,7 @@ const validateProductInput = ({ name, price, imageUrl }) => {
   if (price === undefined || typeof price !== 'number' || price <= 0) {
     return 'Invalid or missing product price';
   }
-  if (!imageUrl || typeof imageUrl !== 'string' || !/^https?:\/\/.+\.(jpg|jpeg|png|webp|svg|gif)$/.test(imageUrl)) {
+  if (!imageUrl || typeof imageUrl !== 'string') {
     return 'Invalid or missing product image URL';
   }
   return null;

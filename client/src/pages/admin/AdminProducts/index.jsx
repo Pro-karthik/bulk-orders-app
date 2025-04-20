@@ -117,7 +117,7 @@ const AdminProducts = () => {
   const renderThings = () => {
     switch (apiStatus) {
       case apiStatusConstants.loading:
-        return <div className="text-center h-8/10 "><GridLoader
+        return <div className="text-center h-full "><GridLoader
         color="#4b8ecc"
         size={10}
       /></div>;
